@@ -10,6 +10,19 @@ const GeneratePage: NextPage = () => {
     prompt: "",
   });
 
+  function updateForm(key: string) {
+    return function (e: React.ChangeEvent<HTMLInputElement>) {
+      setForm((prev) => ({
+        ...prev,
+        [key]: e.target.value,
+      }));
+    };
+  }
+
+  function handleFormSubmit(e: React.FormEvent) {
+    e.preventDefault();
+  }
+
   return (
     <>
       <Head>
@@ -18,18 +31,10 @@ const GeneratePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center">
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
           <FormGroup>
             <label>Prompt</label>
-            <Input
-            value={form.prompt}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...form,
-                  prompt: e.target.value,
-                }))
-              }
-            ></Input>
+            <Input value={form.prompt} onChange={updateForm("prompt")}></Input>
           </FormGroup>
           <button className="rounded bg-blue-400 px-4 py-2 hover:bg-blue-500">
             Submit
