@@ -10,6 +10,12 @@ const GeneratePage: NextPage = () => {
     prompt: "",
   });
 
+  const generateIcon = api.generate.generateIcon.useMutation({
+    onSuccess(data) {
+      console.log('mutation finished', data);
+    },
+  });
+
   function updateForm(key: string) {
     return function (e: React.ChangeEvent<HTMLInputElement>) {
       setForm((prev) => ({
@@ -21,6 +27,11 @@ const GeneratePage: NextPage = () => {
 
   function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
+    //TODO: submit the form data to the backend
+    generateIcon.mutate({
+      prompt: form.prompt,
+    });
+    
   }
 
   return (
